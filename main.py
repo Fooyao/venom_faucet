@@ -69,7 +69,7 @@ class tonclient:
         unsigned = 'V2UgYXBwcmVjaWF0ZSB5b3VyIHBhcnRpY2lwYXRpb24gaW4gdGhlIFZlbm9tIFRlc3RuZXQuIFlvdSB3aWxsIHJlY2VpdmUgZmF1Y2V0IHRva2VucyBmb3IgdGFraW5nIHBhcnQgaW4gdGhlIFRlc3RuZXQgYW5kIGFjdGlvbmFibGUgaXRlbXMuIFRoZSBUZXN0bmV0IHRva2VucyBjYW4gYmUgdXNlZCBmb3IgdGVzdG5ldC1yZWxhdGVkIGFjdGl2aXRpZXMgb25seS4gUGxlYXNlIG5vdGUgdGhhdCB0aGUgVmVub20gVGVzdG5ldCBUb2tlbnMgaGF2ZSBubyBtb25ldGFyeSB2YWx1ZS4='
         params = ParamsOfHash(data=unsigned)
         msgHash = async_core_client.crypto.sha256(params=params).hash
-        unsigned = base64.b64encode(bytes.fromhex('000003E8') + bytes.fromhex(msgHash)).decode()
+        unsigned = base64.b64encode(bytes.fromhex(f'000003e8{msgHash}')).decode()
         sign_params = ParamsOfSign(unsigned=unsigned, keys=self.keypair)
         signature = async_core_client.crypto.sign(params=sign_params).signature
         signature = base64.b64encode(bytes.fromhex(signature)).decode()
