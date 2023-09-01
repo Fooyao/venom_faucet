@@ -17,11 +17,15 @@
 
 当有助记词时，会使用文本提供的助记词，如果没有提供助记词，会自动生成助记词
 
- [nocaptcha](https://www.nocaptcha.io/register?c=dwBf1P) 用于通过Hcaptcha验证码，请自行充值
 
+ ## Hcaptcha打码
+
+  [nocaptcha](https://www.nocaptcha.io/register?c=dwBf1P)
+ 
+
+ ## 代理推荐
+ 
  代理使用随机代理(Rotating proxy)，用户名密码授权格式：user:pass@ip:pron
-
- 代理推荐：
  
  [iproyal](https://iproyal.cn?r=fooyao)
 
