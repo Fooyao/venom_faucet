@@ -196,23 +196,24 @@ class faucet:
             headers = {
                 'asymmetric-keys-with-hash-payload': self.TC.sign_msg()
             }
-            res = await self.http.post('https://venom.network/api/tasks/claim', json=json_data, headers=headers, timeout=300)
-            if res.status_code == 201:
-                token, info, alltoken = {18: 50, 36: 15, 42: 15}, '', 0
-                for _task in res.json():
-                    task_id = _task["taskId"]
-                    if _task["status"] == 'claimed':
-                        info += f'{task_id}:{token[task_id]}|'
-                        alltoken += token[task_id]
-                    else:
-                        info += f'{task_id}:{0}|'
-                logger.info(f'[{self.TC.address[:10]}*******] 领水：{info[:-1]},总共领水:{alltoken}个')
-                with open('领水成功.txt', 'a') as f:
-                    f.write(f'{self.TC.address}----{self.TC.mnemonic}')
-                return True
-            else:
-                logger.error(f'[{self.TC.address[:10]}*******] 领水失败：{res.status_code}')
-                return False
+            for index in range(5):
+                res = await self.http.post('https://venom.network/api/tasks/claim', json=json_data, headers=headers, timeout=300)
+                if res.status_code == 201:
+                    token, info, alltoken = {18: 50, 36: 15, 42: 15}, '', 0
+                    for _task in res.json():
+                        task_id = _task["taskId"]
+                        if _task["status"] == 'claimed':
+                            info += f'{task_id}:{token[task_id]}|'
+                            alltoken += token[task_id]
+                        else:
+                            info += f'{task_id}:{0}|'
+                    logger.info(f'[{self.TC.address[:10]}*******] 领水：{info[:-1]},总共领水:{alltoken}个')
+                    with open('领水成功.txt', 'a') as f:
+                        f.write(f'{self.TC.address}----{self.TC.mnemonic}\n')
+                    return True
+                else:
+                    logger.error(f'[{self.TC.address[:10]}*******] 领水失败：{res.status_code} 重试{index + 1}')
+            return False
         except Exception as e:
             logger.error(f'[{self.TC.address[:10]}*******] 领水失败：{e}')
             return False
